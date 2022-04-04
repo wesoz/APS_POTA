@@ -4,7 +4,7 @@
 # include "arrays.h"
 # include "sort.h"
 
-int ARR_QTTY = 3;
+int ARR_QTTY = 1;
 
 
 int main () {
@@ -16,7 +16,8 @@ int main () {
 
 	printArrayList(arr5, ARR_QTTY, 5);
 	//bubbleSort(arr5[0], 5);
-	sortArrayList(arr5, ARR_QTTY, 5, bubbleSort);
+	int **sortedArrayList = sortArrayList(arr5, ARR_QTTY, 5, bubbleSort);
+	printArrayList(sortedArrayList, ARR_QTTY, 5);
 	printArrayList(arr5, ARR_QTTY, 5);
 	//printArrayList(arr10, ARR_QTTY, 10);
 	

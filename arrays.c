@@ -4,14 +4,6 @@
 
 int MAX_ARR_ELEM_VALUE = 2000;
 
-void copyArray(int *array, int *copy, int size)
-{
-  for (int i = 0; i < size; ++i)
-  {
-    copy[i] = array[i];
-  }
-}
-
 void populateArray(int *arrayPointer, int size) {
 	int i;
 	for (i = 0; i < size; i++) {
