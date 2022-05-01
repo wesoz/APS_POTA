@@ -1,3 +1,8 @@
+# APS POTA
+Estudo comparativo entre os algoritmos de ordenação Bubble Sort, Selection Sort,
+Insertion Sort, Heap Sort, Merge Sort, Quick Sort, Count Sort, Bucket Sort e Radix Sort utilizando como parâmetro o número de
+comparações realizadas por cada algoritmo.
+
 ## Pré Requisitos
 
 Instalar compilador [GCC](https://gcc.gnu.org/install/binaries.html)
