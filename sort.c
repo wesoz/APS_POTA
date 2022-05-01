@@ -69,36 +69,87 @@ void insertionSort(int array[], int size) {
     }
 }
 
-void heapify(int arr[], int n, int i) {
-    // Find largest among root, left child and right child
+void heapify(int array[], int size, int i) {
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
   
-    if (left < n && arr[left] > arr[largest])
+    if (left < size && array[left] > array[largest])
       largest = left;
   
-    if (right < n && arr[right] > arr[largest])
+    if (right < size && array[right] > array[largest])
       largest = right;
   
-    // Swap and continue heapifying if root is not largest
     if (largest != i) {
-      swap(&arr[i], &arr[largest]);
-      heapify(arr, n, largest);
+      swap(&array[i], &array[largest]);
+      heapify(array, size, largest);
     }
   }
   
-  // Main function to do heap sort
-void heapSort(int arr[], int n) {
-    // Build max heap
-    for (int i = n / 2 - 1; i >= 0; i--)
-      heapify(arr, n, i);
+void heapSort(int array[], int size) {
+    
+    for (int i = size / 2 - 1; i >= 0; i--)
+      heapify(array, size, i);
   
-    // Heap sort
-    for (int i = n - 1; i >= 0; i--) {
-      swap(&arr[0], &arr[i]);
-  
-      // Heapify root element to get highest element at root again
-      heapify(arr, i, 0);
+    for (int i = size - 1; i >= 0; i--) {
+      swap(&array[0], &array[i]);
+      heapify(array, i, 0);
     }
-  }
+}
+
+void merge(int array[], int leftIndex, int middleIndex, int rightIndex)
+{
+    int i, j, k;
+    int n1 = middleIndex - leftIndex + 1;
+    int n2 = rightIndex - middleIndex;
+  
+    int L[n1], R[n2];
+  
+    for (i = 0; i < n1; i++)
+        L[i] = array[leftIndex + i];
+    for (j = 0; j < n2; j++)
+        R[j] = array[middleIndex + 1 + j];
+  
+    i = 0;
+    j = 0;
+    k = leftIndex;
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            array[k] = L[i];
+            i++;
+        }
+        else {
+            array[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+  
+    while (i < n1) {
+        array[k] = L[i];
+        i++;
+        k++;
+    }
+  
+    while (j < n2) {
+        array[k] = R[j];
+        j++;
+        k++;
+    }
+}
+  
+void doMergeSort(int array[], int leftIndex, int rightIndex)
+{
+    if (leftIndex < rightIndex) {
+        int middleIndex = leftIndex + (rightIndex - leftIndex) / 2;
+  
+        doMergeSort(array, leftIndex, middleIndex);
+        doMergeSort(array, middleIndex + 1, rightIndex);
+  
+        merge(array, leftIndex, middleIndex, rightIndex);
+    }
+}
+
+void mergeSort(int array[], int size) {
+    doMergeSort(array, 0, size - 1);
+}

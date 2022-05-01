@@ -16,7 +16,7 @@ int main () {
 	printf("Started\n\n");
 	srand(time(NULL));
 
-	struct SortParams sortParams[4];
+	struct SortParams sortParams[5];
 	strcpy(sortParams[0].name, "Bubble Sort");
 	sortParams[0].func = bubbleSort;
 
@@ -29,6 +29,8 @@ int main () {
 	strcpy(sortParams[3].name, "Heap Sort");
 	sortParams[3].func = heapSort;
 	
+	strcpy(sortParams[4].name, "Merge Sort");
+	sortParams[4].func = mergeSort;
 
 	int **arr5 = createArrayList(5, ARR_QTTY);
 	//int **arr10 = createArrayList(10, ARR_QTTY);
@@ -37,7 +39,7 @@ int main () {
 	//bubbleSort(arr5[0], 5);
 
 	int i;
-	for (i = 0; i < 4; i++) {
+	for (i = 0; i < 5; i++) {
 
 		char title[20]; 
 		strcpy(title, sortParams[i].name);
