@@ -1,0 +1,1 @@
+gcc arrays.c sort.c main.c -o apspota
