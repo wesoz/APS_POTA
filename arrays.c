@@ -36,10 +36,10 @@ void printArray(int *arrayPointer, int size) {
 	}
 }
 
-void printArrayList(int **arrayList, int quantity, int size) {
+void printArrayList(int **arrayList, int quantity, int size, char title[]) {
 	int i;
 	printf("===========================================\n");
-	printf("Arrays of size %d\n", size);
+	printf("%sArrays of size %d\n", title, size);
 	printf("===========================================\n");
 	for(i = 0; i < quantity; i++) {
 		printf("---------------------------- Array %d --------------------------\n", i + 1);
