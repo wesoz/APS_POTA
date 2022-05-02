@@ -58,9 +58,6 @@ void insertionSort(int array[], int size) {
         key = array[i];
         j = i - 1;
  
-        /* Move elements of arr[0..i-1], that are
-          greater than key, to one position ahead
-          of their current position */
         while (j >= 0 && array[j] > key) {
             array[j + 1] = array[j];
             j = j - 1;
@@ -138,18 +135,86 @@ void merge(int array[], int leftIndex, int middleIndex, int rightIndex)
     }
 }
   
-void doMergeSort(int array[], int leftIndex, int rightIndex)
+void _mergeSort(int array[], int leftIndex, int rightIndex)
 {
     if (leftIndex < rightIndex) {
         int middleIndex = leftIndex + (rightIndex - leftIndex) / 2;
   
-        doMergeSort(array, leftIndex, middleIndex);
-        doMergeSort(array, middleIndex + 1, rightIndex);
+        _mergeSort(array, leftIndex, middleIndex);
+        _mergeSort(array, middleIndex + 1, rightIndex);
   
         merge(array, leftIndex, middleIndex, rightIndex);
     }
 }
 
 void mergeSort(int array[], int size) {
-    doMergeSort(array, 0, size - 1);
+    _mergeSort(array, 0, size - 1);
+}
+
+void _quickSort(int array[], int left, int right) {
+    int i, j, x;
+     
+    i = left;
+    j = right;
+    x = array[(left + right) / 2];
+     
+    while(i <= j) {
+        while(array[i] < x && i < right) {
+            i++;
+        }
+        while(array[j] > x && j > left) {
+            j--;
+        }
+        if(i <= j) {
+            swap(&array[i], &array[j]);
+            i++;
+            j--;
+        }
+    }
+     
+    if(j > left) {
+        _quickSort(array, left, j);
+    }
+    if(i < right) {
+        _quickSort(array, i, right);
+    }
+}
+
+void quickSort(int array[], int size) {
+    _quickSort(array, 0, size - 1);
+}
+
+void countingSort(int array[], int size) {
+
+  int output[size];
+
+  int max = array[0];
+  for (int i = 1; i < size; i++) {
+    if (array[i] > max)
+      max = array[i];
+  }
+
+  int count[max + 1];
+
+  for (int i = 0; i <= max; ++i) {
+    count[i] = 0;
+  }
+
+  for (int i = 0; i < size; i++) {
+    count[array[i]]++;
+  }
+
+  for (int i = 1; i <= max; i++) {
+    count[i] += count[i - 1];
+  }
+
+  for (int i = size - 1; i >= 0; i--) {
+    output[count[array[i]] - 1] = array[i];
+    count[array[i]]--;
+  }
+
+  for (int i = 0; i < size; i++) {
+    array[i] = output[i];
+  }
+
 }

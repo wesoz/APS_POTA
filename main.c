@@ -16,7 +16,7 @@ int main () {
 	printf("Started\n\n");
 	srand(time(NULL));
 
-	struct SortParams sortParams[5];
+	struct SortParams sortParams[7];
 	strcpy(sortParams[0].name, "Bubble Sort");
 	sortParams[0].func = bubbleSort;
 
@@ -32,14 +32,19 @@ int main () {
 	strcpy(sortParams[4].name, "Merge Sort");
 	sortParams[4].func = mergeSort;
 
+	strcpy(sortParams[5].name, "Quick Sort");
+	sortParams[5].func = quickSort;
+
+	strcpy(sortParams[6].name, "Counting Sort");
+	sortParams[6].func = countingSort;
+
 	int **arr5 = createArrayList(5, ARR_QTTY);
-	//int **arr10 = createArrayList(10, ARR_QTTY);
 
 	printArrayList(arr5, ARR_QTTY, 5, "");
-	//bubbleSort(arr5[0], 5);
 
+ 	int n = sizeof(sortParams) / sizeof(sortParams[0]);
 	int i;
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < n; i++) {
 
 		char title[20]; 
 		strcpy(title, sortParams[i].name);
@@ -51,21 +56,9 @@ int main () {
 		free(sortedArrayList);
 	}
 
-/*
-	int **bubbleArrayList = sortArrayList(arr5, ARR_QTTY, 5, sortParams[0].func);
-	printArrayList(bubbleArrayList, ARR_QTTY, 5, strcat(sortParams[0].name, " -> "));
-
-	int **selectionArrayList = sortArrayList(arr5, ARR_QTTY, 5, selectionSort);
-	printArrayList(selectionArrayList, ARR_QTTY, 5, "Selection Sort -> ");
-
-	int **insertionArrayList = sortArrayList(arr5, ARR_QTTY, 5, insertionSort);
-	printArrayList(insertionArrayList, ARR_QTTY, 5, "Insertion Sort -> ");
-*/
 	printArrayList(arr5, ARR_QTTY, 5, "Original -> ");
-	//printArrayList(arr10, ARR_QTTY, 10);
 	
 	free(arr5);
-	//free(arr10);
 	
 	printf("\nFinished\n");
 	return 0;
