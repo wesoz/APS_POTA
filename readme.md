@@ -11,7 +11,7 @@ Instalar compilador [GCC](https://gcc.gnu.org/install/binaries.html)
 
 Executar a linha abaixo dentro do diretório raiz
 ```powershell
-gcc arrays.c sort.c main.c -o apspota
+gcc src/arrays.c src/sort.c src/main.c -o apspota
 ```
 
 Será gerado um executável chamado apspota
