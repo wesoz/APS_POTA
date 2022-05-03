@@ -4,6 +4,7 @@
 # include <string.h>
 # include "arrays.h"
 # include "sort.h"
+# include <sys/time.h>
 
 int ARR_QTTY = 1;
 
@@ -11,6 +12,8 @@ struct SortParams {
 	char name[20];
 	void (*func)(int*, int);
 };
+
+struct timespec start, end;
 
 int main () {
 	printf("Started\n\n");
@@ -44,14 +47,28 @@ int main () {
 
  	int n = sizeof(sortParams) / sizeof(sortParams[0]);
 	int i;
+
 	for (i = 0; i < n; i++) {
+
+		clock_gettime(CLOCK_MONOTONIC, &start); // Captura o horario antes da execucao do sort
+		int **sortedArrayList = sortArrayList(arr5, ARR_QTTY, 5, sortParams[i].func);
+		clock_gettime(CLOCK_MONOTONIC, &end); // Captura o horario DEPOIS da execucao do sort
+
+		// Captura o tempo em milissegundos
+		int delta_us = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
+
+		// Converte o tempo para string
+		char deltaStr[8];
+		sprintf(deltaStr, "%d", delta_us);
 
 		char title[20]; 
 		strcpy(title, sortParams[i].name);
-		strcat(title, " -> ");
-
-		int **sortedArrayList = sortArrayList(arr5, ARR_QTTY, 5, sortParams[i].func);
-		printArrayList(sortedArrayList, ARR_QTTY, 5, title);
+		strcat(title, " - ");
+		strcat(title, deltaStr);
+		strcat(title, "ms");
+		
+		printf("%s\n", title);
+		// printArrayList(sortedArrayList, ARR_QTTY, 5, title);
 
 		free(sortedArrayList);
 	}
