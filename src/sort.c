@@ -14,17 +14,20 @@ int * copyArray(int *array, int size)
     return arrayCopy;
 }
 
-struct SortResult sortArrayList(int **arrayList, int arrayQuantity, int arraySize, void (*func)(int*, int)) {
+struct SortResult sortArrayList(int **arrayList, int arrayQuantity, int arraySize, int (*func)(int*, int)) {
     int **arrayListCopy = (int **)calloc(arrayQuantity, sizeof(int) * arraySize * arrayQuantity);
     struct SortResult sortResult;
+    sortResult.totalCompares = 0;
 	int i;
     clock_gettime(CLOCK_MONOTONIC, &start); // Captura o horario antes da execucao do sort
 	for (i = 0; i < arrayQuantity; i++) {
         int *array = copyArray(arrayList[i], arraySize);
-		func(array, arraySize);
+		sortResult.totalCompares += func(array, arraySize);
         arrayListCopy[i] = array;
 	}
     clock_gettime(CLOCK_MONOTONIC, &end); // Captura o horario DEPOIS da execucao do sort
+
+    sortResult.avgCompares = sortResult.totalCompares / arrayQuantity;
 
     // Captura o tempo em milissegundos
     sortResult.totalTime = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
@@ -42,8 +45,9 @@ void swap(int *elementA, int *elementB)
     *elementB = temp;
 }
 
-void bubbleSort (int *array, int size) {
-    int k, j, aux;
+int bubbleSort (int *array, int size) {
+    int k, j;
+    int compares = 0;
     for (k = 1; k < size; k++) {
         for (j = 0; j < size - 1; j++) {
             if (array[j] > array[j + 1]) {
@@ -51,11 +55,12 @@ void bubbleSort (int *array, int size) {
             }
         }
     }
+    return compares;
 }
 
-void selectionSort(int *array, int size) {
+int selectionSort(int *array, int size) {
     int i, j, min_idx;
-  
+    int compares = 0;
     for (i = 0; i < size-1; i++)
     {
         min_idx = i;
@@ -64,10 +69,12 @@ void selectionSort(int *array, int size) {
             min_idx = j;
         swap(&array[min_idx], &array[i]);
     }
+    return compares;
 }
 
-void insertionSort(int array[], int size) {
+int insertionSort(int array[], int size) {
     int i, key, j;
+    int compares = 0;
     for (i = 1; i < size; i++) {
         key = array[i];
         j = i - 1;
@@ -78,6 +85,7 @@ void insertionSort(int array[], int size) {
         }
         array[j + 1] = key;
     }
+    return compares;
 }
 
 void heapify(int array[], int size, int i) {
@@ -95,10 +103,10 @@ void heapify(int array[], int size, int i) {
       swap(&array[i], &array[largest]);
       heapify(array, size, largest);
     }
-  }
+}
   
-void heapSort(int array[], int size) {
-    
+int heapSort(int array[], int size) {
+    int compares = 0;
     for (int i = size / 2 - 1; i >= 0; i--)
       heapify(array, size, i);
   
@@ -106,6 +114,7 @@ void heapSort(int array[], int size) {
       swap(&array[0], &array[i]);
       heapify(array, i, 0);
     }
+    return compares;
 }
 
 void merge(int array[], int leftIndex, int middleIndex, int rightIndex)
@@ -161,8 +170,10 @@ void _mergeSort(int array[], int leftIndex, int rightIndex)
     }
 }
 
-void mergeSort(int array[], int size) {
+int mergeSort(int array[], int size) {
+    int compares = 0;
     _mergeSort(array, 0, size - 1);
+    return compares;
 }
 
 void _quickSort(int array[], int left, int right) {
@@ -194,41 +205,44 @@ void _quickSort(int array[], int left, int right) {
     }
 }
 
-void quickSort(int array[], int size) {
+int quickSort(int array[], int size) {
+    int compares = 0;
     _quickSort(array, 0, size - 1);
+    return compares;
 }
 
-void countingSort(int array[], int size) {
+int countingSort(int array[], int size) {
 
-  int output[size];
+    int output[size];
+    int compares = 0;
 
-  int max = array[0];
-  for (int i = 1; i < size; i++) {
+    int max = array[0];
+    for (int i = 1; i < size; i++) {
     if (array[i] > max)
-      max = array[i];
-  }
+        max = array[i];
+    }
 
-  int count[max + 1];
+    int count[max + 1];
 
-  for (int i = 0; i <= max; ++i) {
-    count[i] = 0;
-  }
+    for (int i = 0; i <= max; ++i) {
+        count[i] = 0;
+    }
 
-  for (int i = 0; i < size; i++) {
-    count[array[i]]++;
-  }
+    for (int i = 0; i < size; i++) {
+        count[array[i]]++;
+    }
 
-  for (int i = 1; i <= max; i++) {
-    count[i] += count[i - 1];
-  }
+    for (int i = 1; i <= max; i++) {
+        count[i] += count[i - 1];
+    }
 
-  for (int i = size - 1; i >= 0; i--) {
-    output[count[array[i]] - 1] = array[i];
-    count[array[i]]--;
-  }
+    for (int i = size - 1; i >= 0; i--) {
+        output[count[array[i]] - 1] = array[i];
+        count[array[i]]--;
+    }
 
-  for (int i = 0; i < size; i++) {
-    array[i] = output[i];
-  }
-
+    for (int i = 0; i < size; i++) {
+        array[i] = output[i];
+    }
+    return compares;
 }

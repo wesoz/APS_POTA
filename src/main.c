@@ -9,7 +9,7 @@ int ARR_QTTY = 50;
 
 struct SortParams {
 	char name[20];
-	void (*func)(int*, int);
+	int (*func)(int*, int);
 };
 
 int main () {
@@ -77,7 +77,7 @@ int main () {
 		}
 		printf("\n");
 		for (j = 0; j < sortParamsN; j++) {
-			printf("%d;", sortResult[j].avgTime);
+			printf("%d;", sortResult[j].avgCompares);
 		}
 
 		free(arrayList[i].arrays);
