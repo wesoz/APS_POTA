@@ -1,5 +1,16 @@
+#ifndef ARRAYS_HEADER_GUARD
+#define ARRAYS_HEADER_GUARD
+
+struct ArrayList {
+	int **arrays;
+	int size;
+	int quantity;
+};
+
 int * createArray(int size);
-int ** createArrayList(int size, int quantity);
+int ** createArrayList(struct ArrayList arrayList);
 void printArray(int *arrayPointer, int size);
-void printArrayList(int **arrayList, int quantity, int size, char title[]);
+void printArrayList(struct ArrayList arrayList, char title[]);
 void populateArray(int *arrayPointer, int size);
+
+#endif

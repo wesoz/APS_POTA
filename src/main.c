@@ -4,16 +4,13 @@
 # include <string.h>
 # include "arrays.h"
 # include "sort.h"
-# include <sys/time.h>
 
-int ARR_QTTY = 1;
+int ARR_QTTY = 50;
 
 struct SortParams {
 	char name[20];
 	void (*func)(int*, int);
 };
-
-struct timespec start, end;
 
 int main () {
 	printf("Started\n\n");
@@ -41,41 +38,50 @@ int main () {
 	strcpy(sortParams[6].name, "Counting Sort");
 	sortParams[6].func = countingSort;
 
-	int **arr5 = createArrayList(5, ARR_QTTY);
+	int arraysN = 6;
+	struct ArrayList arrayList[arraysN];
+	arrayList[0].size = 5;
+	arrayList[0].quantity = ARR_QTTY;
 
-	printArrayList(arr5, ARR_QTTY, 5, "");
+	arrayList[1].size = 10;
+	arrayList[1].quantity = ARR_QTTY;
 
- 	int n = sizeof(sortParams) / sizeof(sortParams[0]);
+	arrayList[2].size = 50;
+	arrayList[2].quantity = ARR_QTTY;
+
+	arrayList[3].size = 100;
+	arrayList[3].quantity = ARR_QTTY;
+
+	arrayList[4].size = 1000;
+	arrayList[4].quantity = ARR_QTTY;
+
+	arrayList[5].size = 1000;
+	arrayList[5].quantity = ARR_QTTY;
+
+
+ 	int sortParamsN = sizeof(sortParams) / sizeof(sortParams[0]);
 	int i;
 
-	for (i = 0; i < n; i++) {
+	for (i = 0; i < arraysN; i++) {
 
-		clock_gettime(CLOCK_MONOTONIC, &start); // Captura o horario antes da execucao do sort
-		int **sortedArrayList = sortArrayList(arr5, ARR_QTTY, 5, sortParams[i].func);
-		clock_gettime(CLOCK_MONOTONIC, &end); // Captura o horario DEPOIS da execucao do sort
+		arrayList[i].arrays = createArrayList(arrayList[i]);
 
-		// Captura o tempo em milissegundos
-		int delta_us = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
+		printf("\n\n>>>> Array Size: %d <<<<\n\n", arrayList[i].size);
 
-		// Converte o tempo para string
-		char deltaStr[8];
-		sprintf(deltaStr, "%d", delta_us);
+		struct SortResult sortResult[sortParamsN];
 
-		char title[20]; 
-		strcpy(title, sortParams[i].name);
-		strcat(title, " - ");
-		strcat(title, deltaStr);
-		strcat(title, "ms");
-		
-		printf("%s\n", title);
-		// printArrayList(sortedArrayList, ARR_QTTY, 5, title);
+		int j;
+		for (j = 0; j < sortParamsN; j++) {
+			sortResult[j] = sortArrayList(arrayList[i].arrays, arrayList[i].quantity, arrayList[i].size, sortParams[j].func);
+			printf("%s;", sortParams[j].name);
+		}
+		printf("\n");
+		for (j = 0; j < sortParamsN; j++) {
+			printf("%d;", sortResult[j].avgTime);
+		}
 
-		free(sortedArrayList);
+		free(arrayList[i].arrays);
 	}
-
-	printArrayList(arr5, ARR_QTTY, 5, "Original -> ");
-	
-	free(arr5);
 	
 	printf("\nFinished\n");
 	return 0;

@@ -1,6 +1,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <time.h>
+# include "arrays.h"
 
 int MAX_ARR_ELEM_VALUE = 2000;
 
@@ -18,15 +19,15 @@ int * createArray(int size) {
 	return newArray;
 }
 
-int ** createArrayList(int size, int quantity) {
-	int **arrayList = (int **)calloc(quantity, sizeof(int) * size * quantity);
+int ** createArrayList(struct ArrayList arrayList) {
+	int **arrays = (int **)calloc(arrayList.quantity, sizeof(int) * arrayList.size * arrayList.quantity);
 	
 	int i;
-	for(i = 0; i < quantity; i++) {
-		arrayList[i] = createArray(size);
+	for(i = 0; i < arrayList.quantity; i++) {
+		arrays[i] = createArray(arrayList.size);
 	}
-	
-	return arrayList;
+
+	return arrays;
 }
 
 void printArray(int *arrayPointer, int size) {
@@ -36,14 +37,14 @@ void printArray(int *arrayPointer, int size) {
 	}
 }
 
-void printArrayList(int **arrayList, int quantity, int size, char title[]) {
+void printArrayList(struct ArrayList arrayList, char title[]) {
 	int i;
 	printf("===========================================\n");
-	printf("%sArrays of size %d\n", title, size);
+	printf("%s%d arrays of size %d\n", title, arrayList.quantity, arrayList.size);
 	printf("===========================================\n");
-	for(i = 0; i < quantity; i++) {
+	for(i = 0; i < arrayList.quantity; i++) {
 		printf("---------------------------- Array %d --------------------------\n", i + 1);
-		printArray(arrayList[i], size);
+		printArray(arrayList.arrays[i], arrayList.size);
 	}
 	printf("===========================================\n");
 }

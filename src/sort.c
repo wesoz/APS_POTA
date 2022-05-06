@@ -1,4 +1,8 @@
 # include <stdlib.h>
+# include "sort.h"
+# include <time.h>
+
+struct timespec start, end;
 
 int * copyArray(int *array, int size)
 {
@@ -10,15 +14,25 @@ int * copyArray(int *array, int size)
     return arrayCopy;
 }
 
-int ** sortArrayList(int **arrayList, int arrayQuantity, int arraySize, void (*func)(int*, int)) {
+struct SortResult sortArrayList(int **arrayList, int arrayQuantity, int arraySize, void (*func)(int*, int)) {
     int **arrayListCopy = (int **)calloc(arrayQuantity, sizeof(int) * arraySize * arrayQuantity);
+    struct SortResult sortResult;
 	int i;
+    clock_gettime(CLOCK_MONOTONIC, &start); // Captura o horario antes da execucao do sort
 	for (i = 0; i < arrayQuantity; i++) {
         int *array = copyArray(arrayList[i], arraySize);
 		func(array, arraySize);
         arrayListCopy[i] = array;
 	}
-    return arrayListCopy;
+    clock_gettime(CLOCK_MONOTONIC, &end); // Captura o horario DEPOIS da execucao do sort
+
+    // Captura o tempo em milissegundos
+    sortResult.totalTime = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
+
+    sortResult.avgTime = sortResult.totalTime / arrayQuantity;
+
+    free(arrayListCopy);
+    return sortResult;
 }
 
 void swap(int *elementA, int *elementB)
