@@ -55,7 +55,7 @@ int main () {
 	arrayList[4].size = 1000;
 	arrayList[4].quantity = ARR_QTTY;
 
-	arrayList[5].size = 1000;
+	arrayList[5].size = 10000;
 	arrayList[5].quantity = ARR_QTTY;
 
 
