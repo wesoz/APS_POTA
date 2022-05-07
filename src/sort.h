@@ -4,8 +4,8 @@
 struct SortResult {
     int totalTime;
     int avgTime;
-    int totalCompares;
-    int avgCompares;
+    long totalCompares;
+    long avgCompares;
 };
 
 int bubbleSort (int array[], int size);

@@ -70,14 +70,21 @@ int main () {
 
 		struct SortResult sortResult[sortParamsN];
 
+		printf("algoritmo;");
 		int j;
 		for (j = 0; j < sortParamsN; j++) {
 			sortResult[j] = sortArrayList(arrayList[i].arrays, arrayList[i].quantity, arrayList[i].size, sortParams[j].func);
 			printf("%s;", sortParams[j].name);
 		}
 		printf("\n");
+		printf("comparacoes;");
 		for (j = 0; j < sortParamsN; j++) {
-			printf("%d;", sortResult[j].avgCompares);
+			printf("%ld;", sortResult[j].avgCompares);
+		}
+		printf("\n");
+		printf("tempos;");
+		for (j = 0; j < sortParamsN; j++) {
+			printf("%d;", sortResult[j].avgTime);
 		}
 
 		free(arrayList[i].arrays);

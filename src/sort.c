@@ -47,7 +47,7 @@ void swap(int *elementA, int *elementB)
 
 int bubbleSort (int *array, int size) {
     int k, j;
-    int compares = 0;
+    long compares = 0;
     for (k = 1; k < size; k++) {
         for (j = 0; j < size - 1; j++) {
             compares++;
@@ -61,7 +61,7 @@ int bubbleSort (int *array, int size) {
 
 int selectionSort(int *array, int size) {
     int i, j, min_idx;
-    int compares = 0;
+    long compares = 0;
     for (i = 0; i < size-1; i++)
     {
         min_idx = i;
@@ -77,7 +77,7 @@ int selectionSort(int *array, int size) {
 
 int insertionSort(int array[], int size) {
     int i, key, j;
-    int compares = 0;
+    long compares = 0;
     for (i = 1; i < size; i++) {
         key = array[i];
         j = i - 1;
@@ -92,7 +92,7 @@ int insertionSort(int array[], int size) {
     return compares;
 }
 
-void heapify(int array[], int size, int i, int *compares) {
+void heapify(int array[], int size, int i, long *compares) {
     int largest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
@@ -113,7 +113,7 @@ void heapify(int array[], int size, int i, int *compares) {
 }
   
 int heapSort(int array[], int size) {
-    int compares = 0;
+    long compares = 0;
 
     for (int i = size / 2 - 1; i >= 0; i--)
         heapify(array, size, i, &compares);
@@ -126,7 +126,7 @@ int heapSort(int array[], int size) {
     return compares;
 }
 
-void merge(int array[], int leftIndex, int middleIndex, int rightIndex, int *compares)
+void merge(int array[], int leftIndex, int middleIndex, int rightIndex, long *compares)
 {
     int i, j, k;
     int n1 = middleIndex - leftIndex + 1;
@@ -173,7 +173,7 @@ void merge(int array[], int leftIndex, int middleIndex, int rightIndex, int *com
     }
 }
   
-void _mergeSort(int array[], int leftIndex, int rightIndex, int *compares)
+void _mergeSort(int array[], int leftIndex, int rightIndex, long *compares)
 {
     *compares = *compares + 1;
     if (leftIndex < rightIndex) {
@@ -187,12 +187,12 @@ void _mergeSort(int array[], int leftIndex, int rightIndex, int *compares)
 }
 
 int mergeSort(int array[], int size) {
-    int compares = 0;
+    long compares = 0;
     _mergeSort(array, 0, size - 1, &compares);
     return compares;
 }
 
-void _quickSort(int array[], int left, int right, int *compares) {
+void _quickSort(int array[], int left, int right, long *compares) {
     int i, j, x;
      
     i = left;
@@ -229,7 +229,7 @@ void _quickSort(int array[], int left, int right, int *compares) {
 }
 
 int quickSort(int array[], int size) {
-    int compares = 0;
+    long compares = 0;
     _quickSort(array, 0, size - 1, &compares);
     return compares;
 }
@@ -237,7 +237,7 @@ int quickSort(int array[], int size) {
 int countingSort(int array[], int size) {
 
     int output[size];
-    int compares = 0;
+    long compares = 0;
 
     int max = array[0];
     for (int i = 1; i < size; i++) {
