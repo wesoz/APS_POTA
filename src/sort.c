@@ -14,7 +14,7 @@ int * copyArray(int *array, int size)
     return arrayCopy;
 }
 
-struct SortResult sortArrayList(int **arrayList, int arrayQuantity, int arraySize, int (*func)(int*, int)) {
+struct SortResult sortArrayList(int **arrayList, int arrayQuantity, int arraySize, long (*func)(int*, int)) {
     int **arrayListCopy = (int **)calloc(arrayQuantity, sizeof(int) * arraySize * arrayQuantity);
     struct SortResult sortResult;
     sortResult.totalCompares = 0;
@@ -45,7 +45,7 @@ void swap(int *elementA, int *elementB)
     *elementB = temp;
 }
 
-int bubbleSort (int *array, int size) {
+long bubbleSort (int *array, int size) {
     int k, j;
     long compares = 0;
     for (k = 1; k < size; k++) {
@@ -59,7 +59,7 @@ int bubbleSort (int *array, int size) {
     return compares;
 }
 
-int selectionSort(int *array, int size) {
+long selectionSort(int *array, int size) {
     int i, j, min_idx;
     long compares = 0;
     for (i = 0; i < size-1; i++)
@@ -75,7 +75,7 @@ int selectionSort(int *array, int size) {
     return compares;
 }
 
-int insertionSort(int array[], int size) {
+long insertionSort(int array[], int size) {
     int i, key, j;
     long compares = 0;
     for (i = 1; i < size; i++) {
@@ -112,7 +112,7 @@ void heapify(int array[], int size, int i, long *compares) {
     }
 }
   
-int heapSort(int array[], int size) {
+long heapSort(int array[], int size) {
     long compares = 0;
 
     for (int i = size / 2 - 1; i >= 0; i--)
@@ -186,7 +186,7 @@ void _mergeSort(int array[], int leftIndex, int rightIndex, long *compares)
     }
 }
 
-int mergeSort(int array[], int size) {
+long mergeSort(int array[], int size) {
     long compares = 0;
     _mergeSort(array, 0, size - 1, &compares);
     return compares;
@@ -228,13 +228,13 @@ void _quickSort(int array[], int left, int right, long *compares) {
     }
 }
 
-int quickSort(int array[], int size) {
+long quickSort(int array[], int size) {
     long compares = 0;
     _quickSort(array, 0, size - 1, &compares);
     return compares;
 }
 
-int countingSort(int array[], int size) {
+long countingSort(int array[], int size) {
 
     int output[size];
     long compares = 0;

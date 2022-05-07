@@ -9,7 +9,7 @@ int ARR_QTTY = 50;
 
 struct SortParams {
 	char name[20];
-	int (*func)(int*, int);
+	long (*func)(int*, int);
 };
 
 int main () {
